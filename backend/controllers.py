@@ -349,6 +349,7 @@ def delete_subject(sid):
                 db.session.delete(chapter)
             db.session.delete(subject)
             db.session.commit()
+            flash("Subject deleted successfully!", "success")
             return redirect(url_for('admin'))
         except Exception as e:
             db.session.rollback()
@@ -366,6 +367,7 @@ def delete_chapter(cid):
                 db.session.delete(quiz) 
             db.session.delete(chapter) 
             db.session.commit()
+            flash("Chapter deleted successfully!", "success")
             return redirect(url_for('admin'))
         except Exception as e:
             db.session.rollback()
@@ -395,6 +397,7 @@ def delete_question(qid):
             question = Question.query.get_or_404(qid)
             db.session.delete(question)
             db.session.commit()
+            flash('Question deleted successfully!', 'success')
             return redirect(url_for('admin_quiz'))
         except Exception as e:
             db.session.rollback()
@@ -409,6 +412,11 @@ def delete_question(qid):
 @login_required
 def user():
     quizzes = Quiz.query.order_by(Quiz.date).all()
+    
+    today= datetime.today().date()
+    for quiz in quizzes:
+        quiz.active = (quiz.date <= today)
+    
     return render_template("user.html", user=current_user, quizzes = quizzes)
 
 # User Scores Page
@@ -491,14 +499,11 @@ def submit_quiz(qid):
         if user_answer == question.correct_option:
             score += 1
     today = datetime.now().date()
-    existing_score = Score.query.filter_by(user_id=current_user.id, quiz_id=quiz.id).first()
-    if existing_score:
-        existing_score.score = score
-        existing_score.date = today.strftime('%Y-%m-%d')
-    else:
-        new_score = Score(user_id=current_user.id, quiz_id=quiz.id, score=score, date=today.strftime('%Y-%m-%d'))
-        db.session.add(new_score)
+    
+    new_score = Score(user_id=current_user.id, quiz_id=quiz.id, score=score, date=today.strftime('%Y-%m-%d'))
+    db.session.add(new_score)
     db.session.commit()
+    
     return redirect(url_for('quiz_result', qid=quiz.id, score=score))
 
 # Quiz result page

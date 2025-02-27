@@ -80,7 +80,7 @@
             <tbody>
             {% for question in quiz.questions %}
               <tr>
-                <td>{{question.id}}</td>
+                <td>{{loop.index}}</td>
                 <td>{{question.title}}</td>
                 <td>
                   <a href="/question/{{ question.id }}/edit" class="btn btn-outline-warning">Edit</a>

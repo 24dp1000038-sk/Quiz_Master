@@ -46,10 +46,10 @@
       <table class="table table-bordered">
         <thead>
           <tr>
-            <th class="text-center">Quiz Date</th>
+            <th class="text-center">Submit Date</th>
             <th class="text-center">Chapter</th>
-            <th class="text-center">Score</th>
             <th class="text-center">Total Questions</th>
+            <th class="text-center">Score</th>
           </tr>
         </thead>
         <tbody>
@@ -57,8 +57,8 @@
           <tr>
             <td class="text-center">{{ score.quiz_date }}</td>
             <td class="text-center">{{ score.chapter_name }}</td>
-            <td class="text-center">{{ score.score }}/{{ score.total_questions }}</td>
             <td class="text-center">{{ score.total_questions }}</td>
+            <td class="text-center">{{ score.score }}/{{ score.total_questions }}</td>
           </tr>
           {% endfor %}
           {% if scores|length == 0 %}

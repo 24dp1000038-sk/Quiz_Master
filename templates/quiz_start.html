@@ -16,7 +16,7 @@
       {% for question in quiz.questions %}
       <div class="form-control mb-2">
         <div class="border border-primary rounded p-2 mb-2">
-          <p>{{ question.id }}. {{ question.question_stmt }}</p>
+          <p>{{ loop.index }}. {{ question.question_stmt }}</p>
         </div>
         <div class="form-check">
           <input class="form-check-input" type="radio" name="question_{{ question.id }}" id="option_a_{{ question.id }}" value="a">

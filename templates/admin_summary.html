@@ -49,31 +49,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Top Scoring Users -->
-    <div class="mt-4 summary-container mb-5 table-responsive">
-        <h5 class="text-center">Top Scorers Per Subject</h5>
-        {% if subject_users %}
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Subject</th>
-                        <th>Top Scorers</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for subject, users in subject_users.items() %}
-                        <tr>
-                            <td>{{ subject }}</td>
-                            <td>{{ users | join(', ') }}</td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        {% else %}
-            <p class="text-center">No data available.</p>
-        {% endif %}
-    </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
