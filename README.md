@@ -28,8 +28,8 @@
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/your-username/quiz-master-v1.git
-   cd quiz-master-v1
+   git clone https://github.com/your-username/quiz_master.git
+   cd quiz_master
    ```
 2. **Create a virtual environment & install dependencies:**
     1. open the terminal
