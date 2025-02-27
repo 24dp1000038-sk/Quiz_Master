@@ -1,0 +1,75 @@
+{% extends "base.html" %} {% block head %}
+<style>
+  nav {
+    background-color: #BBDED6;
+  }
+</style>
+{% endblock %} {% block nav %}
+
+<nav class="navbar navbar-expand-lg navbar-light">
+  <button
+    class="navbar-toggler mx-4"
+    type="button"
+    data-toggle="collapse"
+    data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse mx-4" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/user">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/user_scores">Scores</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/user_summary">Summary</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/logout">Logout</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+{% endblock %} {% block content %}
+
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="card col-lg-8 mt-3 table-responsive">
+      <h3 class="card-header text-center mt-2">Quiz Scores</h3>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th class="text-center">Quiz Date</th>
+            <th class="text-center">Chapter</th>
+            <th class="text-center">Score</th>
+            <th class="text-center">Total Questions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for score in scores %}
+          <tr>
+            <td class="text-center">{{ score.quiz_date }}</td>
+            <td class="text-center">{{ score.chapter_name }}</td>
+            <td class="text-center">{{ score.score }}/{{ score.total_questions }}</td>
+            <td class="text-center">{{ score.total_questions }}</td>
+          </tr>
+          {% endfor %}
+          {% if scores|length == 0 %}
+          <tr>
+              <td colspan="4" class="text-center">No scores available yet.</td>
+          </tr
+          {% endif %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

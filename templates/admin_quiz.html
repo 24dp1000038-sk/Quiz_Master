@@ -1,0 +1,118 @@
+{% extends "base.html"%}
+
+{% block head %}
+
+<style>
+  nav {
+    background-color: #bee1fa;
+  }
+  .fixed-bottom-button {
+    position: fixed;
+    bottom: 35px;
+    width:150px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+</style>
+
+{% endblock %}
+
+{% block nav %}
+
+<nav class="navbar navbar-expand-lg navbar-light">
+  <button
+    class="navbar-toggler mx-4"
+    type="button"
+    data-toggle="collapse"
+    data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse mx-4" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/admin">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/admin_quiz">Quiz</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/admin_summary">Summary</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/admin/search">Search</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/logout">Logout</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+{% endblock %}
+
+{% block content %} 
+<div class="container mb-5">
+  <div class="row">
+    {% if quizzes %} 
+    {% for quiz in quizzes %}
+    <div class="col-lg-6">
+      <div class="card mt-3">
+        <div class="card-body table-responsive">
+          <h5 class="card-title text-center">{{ quiz.chapter.name }}</h5>
+          <div class="d-flex justify-content-between">
+            <div>Duration: {{quiz.duration}}</div>
+            <div>Date: {{quiz.date}}</div>
+          </div>
+          {% if questions %} 
+          <table class="table table-light table-striped-columns">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Question Title</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for question in quiz.questions %}
+              <tr>
+                <td>{{question.id}}</td>
+                <td>{{question.title}}</td>
+                <td>
+                  <a href="/question/{{ question.id }}/edit" class="btn btn-outline-warning">Edit</a>
+                  <a href="/question/{{ question.id }}/delete" class="btn btn-outline-danger">Delete</a>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          {% else %}
+          <p class="card-text">No Questions found</p>
+          {% endif %}
+          <a href="/quiz/{{ quiz.id }}/edit" class="btn btn-outline-warning float-start me-3">Edit</a>
+          <a href="/quiz/{{ quiz.id }}/delete" class="btn btn-outline-danger float-start">Delete</a>
+          <a href="/new_question/{{ quiz.id }}/" class="btn btn-outline-primary float-end">+ Question</a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  
+  {% endif %} 
+  
+<!----------------------- If quizzes are not present------------------------>
+  {% if not quizzes %}
+    <div class="text-center mt-4 fw-bold">No Quizzes Found, Add Quiz</div>
+  {% endif %}
+
+</div>
+
+<!---------------------- Quiz adding button  ------------------------->
+
+<a href="/new_quiz" class="btn btn-success fixed-bottom-button">+ Quiz</a>
+
+{% endblock %}

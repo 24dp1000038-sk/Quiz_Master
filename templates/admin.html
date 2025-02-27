@@ -1,0 +1,116 @@
+{% extends "base.html" %} 
+
+{% block head %}
+
+<style>
+  nav {
+    background-color: #bee1fa;
+  }
+  .fixed-bottom-button {
+    position: fixed;
+    bottom: 35px;
+    width:150px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+</style>
+
+{% endblock %} 
+
+{% block nav %}
+
+<nav class="navbar navbar-expand-lg navbar-light">
+  <button
+    class="navbar-toggler mx-4"
+    type="button"
+    data-toggle="collapse"
+    data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse mx-4" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/admin">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/admin_quiz">Quiz</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/admin_summary">Summary</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/admin/search">Search</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/logout">Logout</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+{% endblock %}
+
+{% block content %} 
+<div class="container mb-5">
+  <div class="row">
+    <h5 class="text-center">Subjects</h5>
+    {% if subjects %} 
+    {% for subject in subjects %}
+    <div class="col-lg-6">
+      <div class="card mt-3">
+        <div class="card-body table-responsive">
+          <h5 class="card-title">{{ subject.name }}</h5>
+          {% if subject.chapters %} 
+          <table class="table table-light table-striped-columns">
+            <thead>
+              <tr>
+                <th>Chapter Name</th>
+                <th>No. of Questions</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for chapter in subject.chapters %}
+              <tr>
+                <td>{{chapter.name}}</td>
+                <td>
+                  {{chapter.no_of_questions}}
+                </td>
+                <td>
+                  <a href="/chapter/{{ chapter.id }}/edit" class="btn btn-outline-warning">Edit</a>
+                  <a href="/chapter/{{ chapter.id }}/delete" class="btn btn-outline-danger">Delete</a>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          {% else %}
+          <p class="card-text">No chapters found</p>
+          {% endif %}
+          <a href="/subject/{{ subject.id }}/edit" class="btn btn-outline-warning float-start me-3">Edit</a>
+          <a href="/subject/{{ subject.id }}/delete" class="btn btn-outline-danger float-start">Delete</a>
+          <a href="/new_chapter/{{ subject.id }}/" class="btn btn-outline-primary float-end">+ Chapter</a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %} 
+  
+<!----------------------- If subjects are not present------------------------>
+  {% if not subjects %}
+    <div class="text-center mt-4 fw-bold">No Subject Found</div>
+  {% endif %}
+
+</div>
+
+<!---------------------- Subject adding button  ------------------------->
+
+<a href="/new_subject" class="btn btn-warning fixed-bottom-button">+ Subject</a>
+
+{% endblock %}
